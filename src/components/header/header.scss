@@ -1,0 +1,187 @@
+//-----------------------------Sap header-----------------------------\\
+.sap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f5f7;
+  padding: 8px 20.38px 8px 16px;
+  gap: 22px;
+
+  &__left-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #377dff;
+    border-bottom: 1px solid #377dff;
+  }
+  &__close-responsive {
+    display: none !important;
+  }
+  &__title {
+    color: #343839;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+  }
+  &__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 20px;
+      height: 20px;
+      color: #343839;
+    }
+  }
+  @media (max-width: 500px) {
+    justify-content: center;
+    padding: 8px 16px 8px 16px;
+    &__base-cart {
+      display: none;
+    }
+    &__close {
+      display: none;
+    }
+    &__close-responsive {
+      display: flex !important;
+    }
+    &__link {
+      display: none;
+    }
+  }
+  @media (max-width: 310px) {
+    &__left-box {
+      gap: 8px;
+    }
+    &__title {
+      font-size: 10px;
+    }
+  }
+}
+
+//-----------------------------Header-----------------------------\\
+.header {
+  padding: 16px 0;
+  &__navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__logo-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  &__menu-btn {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    display: none;
+    svg {
+      width: 24px;
+      height: 24px;
+      color: #141718;
+    }
+  }
+  &__logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  &__right-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  &__link {
+    font-family: Space Grotesk;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #6c7275;
+  }
+  &__link.active {
+    color: #141718;
+  }
+  &__right-box-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 26px;
+      height: 26px;
+      color: #141718;
+    }
+  }
+  &__right-box-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      width: 26px;
+      height: 26px;
+      color: #141718;
+      path {
+        width: 26px;
+        height: 26px;
+      }
+    }
+  }
+  &__right-box-link--cart--like {
+    position: relative;
+    span {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      min-width: 20px;
+      min-height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-family: Inter;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 10px;
+      color: #ffffff;
+      background: #141718;
+      padding: 5px;
+    }
+  }
+  @media (max-width: 700px) {
+    &__list {
+      display: none;
+    }
+    &__menu-btn {
+      display: flex;
+    }
+    &__right-box-link {
+      display: none;
+      &:nth-child(3) {
+        display: block;
+      }
+      &:nth-child(4) {
+        display: block;
+      }
+    }
+    &__right-box-button {
+      display: none;
+    }
+  }
+}

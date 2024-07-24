@@ -1,0 +1,112 @@
+.footer {
+  padding: 80px 0 32px;
+  background: #141718;
+  &__left-box {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  &__networking-buttons {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    svg {
+      width: 24px;
+      height: 24px;
+      color: #fff;
+    }
+  }
+  &__arrow-box {
+    width: 1px;
+    height: 24px;
+    background: #6c7275;
+  }
+  &__title {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    color: #fefefe;
+  }
+  &__top-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 49px;
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  &__link {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    color: #fefefe;
+  }
+  &__bottom-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 20px;
+    border-top: 0.5px solid #6c7275;
+  }
+  &__bottom-box__left-box {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  &__bottom-box-card {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  &__bottom-box__title {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: left;
+    color: #e8ecef;
+  }
+  &__bottom-box-card__text {
+    font-family: Poppins;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: left;
+    color: #fefefe;
+  }
+  @media (max-width: 765px) {
+    &__top-box {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 680px) {
+    &__bottom-box {
+      flex-direction: column-reverse;
+      gap: 32px;
+    }
+  }
+  @media (max-width: 570px) {
+    &__list {
+      flex-direction: column;
+    }
+    &__left-box {
+      flex-direction: column;
+      gap: 16px;
+    }
+    &__arrow-box {
+      width: 24px;
+      height: 1px;
+    }
+  }
+  &__bottom-box__left-box {
+    flex-direction: column-reverse;
+  }
+}

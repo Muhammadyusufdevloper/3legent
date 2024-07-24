@@ -1,0 +1,60 @@
+.service {
+  margin: 48px 0;
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  &__card {
+    padding: 48px 32px;
+    background-color: #f3f5f7;
+  }
+  &__card-title {
+    margin: 16px 0 8px;
+    font-family: Poppins;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    color: #141718;
+  }
+  &__card-text {
+    font-family: Poppins;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #6c7275;
+  }
+  @media (max-width: 1150px) {
+    margin: 38px 0;
+
+    &__cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 770px) {
+    margin: 28px 0;
+
+    &__cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 500px) {
+    margin: 18px 0;
+    &__cards {
+      gap: 12px;
+    }
+    &__card {
+      padding: 32px 16px;
+      background-color: #f3f5f7;
+    }
+    &__card-title {
+      margin: 10px 0 4px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    &__card-text {
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+}
