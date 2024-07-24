@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom"
-import "./blogCard.scss"
-import { MdArrowForward } from "react-icons/md"
-import { memo } from "react"
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import "./blogCard.scss";
+import { MdArrowForward } from "react-icons/md";
+import { memo } from "react";
+
 const BlogCard = ({ isDateLink, data }) => {
     return (
         <>
@@ -10,7 +12,7 @@ const BlogCard = ({ isDateLink, data }) => {
                     data?.map((item) => (
                         <div key={item._id} className="blog-card">
 
-                            <Link to={`/single-route/${item?._id}`}>
+                            <Link to={`/single-routes/${item?._id}`}>
                                 <div className="blog-card-img">
                                     <img src={item?.images[0]} alt={item?.title} />
                                 </div>
@@ -33,12 +35,20 @@ const BlogCard = ({ isDateLink, data }) => {
                                 }
                             </div>
                         </div>
-                    ))}
-
-
+                    ))
+                }
             </div>
         </>
-    )
-}
+    );
+};
 
-export default memo(BlogCard)
+BlogCard.propTypes = {
+    isDateLink: PropTypes.bool.isRequired,
+    data: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        images: PropTypes.arrayOf(PropTypes.string).isRequired,
+        title: PropTypes.string.isRequired,
+    })).isRequired,
+};
+
+export default memo(BlogCard);

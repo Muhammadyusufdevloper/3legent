@@ -3,8 +3,10 @@ import { Link } from "react-router-dom"
 import BlogCard from "../../../../components/blog-card/BlogCard"
 import "./blogSection.scss"
 import { useGetProductsQuery } from "../../../../context/api/productApi"
+import BlogCardsLoading from "../../../../components/loading/blog-cards-loading/BlogCardsLoading"
+import { memo } from "react"
 const BlogSection = () => {
-    const { data } = useGetProductsQuery({ limit: 3, page: 2 })
+    const { data, isLoading, isFetching } = useGetProductsQuery({ limit: 3, page: 2 })
     return (
         <>
             <section className='blog-section'>
@@ -20,11 +22,14 @@ const BlogSection = () => {
                             </div>
                         </Link>
                     </div>
-                    <BlogCard data={data} isDateLink={true} />
+                    {
+                        isLoading || isFetching ? <BlogCardsLoading limit={3} /> :
+                            <BlogCard data={data} isDateLink={true} />
+                    }
                 </div>
             </section>
         </>
     )
 }
 
-export default BlogSection
+export default memo(BlogSection)
