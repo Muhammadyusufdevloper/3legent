@@ -1,46 +1,47 @@
 import { memo, useState } from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
 import "./search.scss";
 import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
-import { FaArrowCircleLeft } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import { useGetProductsQuery } from "../../../context/api/productApi";
 
-const Search = () => {
+const Search = ({ searchToggle, setSearchToggle }) => {
     const [searchValue, setSearchValue] = useState("");
     const [searchOn, setSearchOn] = useState(false)
-    // const searchesData = CustomerSearch?.innerData
+    const { data } = useGetProductsQuery({ title: searchValue, limit: 10, page: 1 })
+    document.body.style.overflow = searchToggle ? "hidden" : ""
 
-    // let searchData = searchesData?.map((customer) => (
-    //     <li key={customer._id} className="search__search-dropdown__item">
-    //         <Link onClick={() => {
-    //             setSearchOn(false)
-    //             setSearchValue("")
-    //         }} to={`/admin/customer/${customer?._id}`} className="search__search-dropdown__link">
-    //             <IoIosSearch />
-    //             <div className="search__search-dropdown__box">
-    //                 <p>{customer?.fname + "   " + customer?.lname}</p>
-    //                 <p>{customer?.phone_primary}</p>
-    //             </div>
-    //         </Link>
-    //     </li>
-    // ))
+    let searchData = data?.map((product) => (
+        <li key={product.id} className="search__search-dropdown__item">
+            <Link onClick={() => {
+                setSearchOn(false)
+                setSearchValue("")
+            }} to={`/admin/customer/${product?._id}`} className="search__search-dropdown__link">
+                <IoIosSearch />
+                <div className="search__search-dropdown__box">
+                    <p>{product?.title}</p>
+                    <p>${product?.price}</p>
+                </div>
+            </Link>
+        </li>
+    ))
     return (
         <>
-            <form className={`search__search-form `}>
+            <form className={`search__search-form ${searchToggle ? "search__search-form-show" : ""}`}>
                 <label htmlFor="search-button" type="button" className="search__search-btn"><FiSearch /></label>
                 <input id="search-button" value={searchValue} onChange={(e) => setSearchValue(e.target.value)} className={`search__search-input ${searchValue ? "search__search-input-show" : ""}`} type="text" placeholder="search..." />
                 {
                     searchValue ?
                         <div className="search__search-dropdown">
                             <ul className="search__search-dropdown__list">
-                                {/* {searchData} */}
+                                {searchData}
                             </ul>
                         </div>
                         :
                         <></>
                 }
             </form>
+            <div onClick={() => setSearchToggle(false)} className={`search__search-overlay ${searchToggle ? "search__search-overlay-show" : ""}`}></div>
         </>
     )
 }

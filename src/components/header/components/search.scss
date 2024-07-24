@@ -1,18 +1,29 @@
 .search {
-  &__overly {
+  &__search-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     min-height: 100vh;
     cursor: default;
-    z-index: -2;
+    display: none;
+  }
+  &__search-overlay-show {
+    display: block;
   }
   &__search-form {
     position: absolute;
     display: flex;
     align-items: center;
+    width: 0px;
+    right: 90px;
+    transition: all 0.5s ease;
+    opacity: 0;
+    z-index: 99999999;
+  }
+  &__search-form-show {
     width: 800px;
+    opacity: 1;
     right: 30px;
   }
   &__search-btn {
@@ -23,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 99999999;
     cursor: pointer;
     svg {
       width: 24px;
@@ -31,6 +43,7 @@
   }
 
   &__search-input {
+    position: relative;
     padding: 11px 16px 11px 48px;
     width: 100%;
     border: 0.6px solid #d5d5d5;
@@ -40,22 +53,19 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 19.1px;
+    z-index: 9999999;
   }
-  //   &__search-input-show {
-  //     border-radius: 6px 6px 0 ;
-  //     border-bottom: none;
-  //   }
 
   &__search-dropdown {
     position: absolute;
-    top: 100%;
+    top: calc(100%);
     left: 0;
     width: 100%;
-    max-height: 200px;
-    border: 0.6px solid #d5d5d5;
-    background: #f5f6fa;
+    max-height: 700px;
+    border: 1px solid #d5d5d5;
+    background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 99999999;
+    z-index: 99999;
     border-top: none;
     border-radius: 0 0 2px 2px;
     overflow: auto;
@@ -110,6 +120,10 @@
     font-size: 20px;
     display: none;
   }
+  &__search-input-show {
+    border-radius: 6px 6px 0 0;
+    border-bottom: none;
+  }
   &__btn {
     width: 35px;
     height: 35px;
@@ -122,11 +136,30 @@
     font-size: 20px;
     display: none;
   }
+  @media (max-width: 1110px) {
+    &__search-form-show {
+      width: 600px;
+    }
+  }
+  @media (max-width: 1110px) {
+    &__search-form-show {
+      width: 500px;
+    }
+  }
+  @media (max-width: 790px) {
+    &__search-form-show {
+      width: 400px;
+    }
+  }
   @media (max-width: 700px) {
     &__search-form {
       position: static;
       display: flex;
       align-items: center;
+      width: 295px;
+      opacity: 1;
+    }
+    &__search-form-show {
       width: 295px;
     }
   }

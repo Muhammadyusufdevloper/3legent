@@ -2,7 +2,9 @@ import { MdArrowForward } from "react-icons/md"
 import { Link } from "react-router-dom"
 import BlogCard from "../../../../components/blog-card/BlogCard"
 import "./blogSection.scss"
+import { useGetProductsQuery } from "../../../../context/api/productApi"
 const BlogSection = () => {
+    const { data } = useGetProductsQuery({ limit: 3, page: 2 })
     return (
         <>
             <section className='blog-section'>
@@ -18,7 +20,7 @@ const BlogSection = () => {
                             </div>
                         </Link>
                     </div>
-                    <BlogCard isDateLink={true} />
+                    <BlogCard data={data} isDateLink={true} />
                 </div>
             </section>
         </>

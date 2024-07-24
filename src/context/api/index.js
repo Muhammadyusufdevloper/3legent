@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 const baseQuery = async (args, api, extraOptions) => {
   const { dispatch } = api
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: "https://...",
+    baseUrl: "https://6690d3a0c0a7969efd9daf73.mockapi.io/api/1",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("x-auth-token")
       if (token) {
@@ -30,6 +30,6 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 })
 export const api = createApi({
   reducerPath: 'myApi',
   baseQuery: baseQueryWithRetry,
-  tagTypes: ["User", "Product", "Category"], 
+  tagTypes: ["User", "Product", "Category"],
   endpoints: () => ({}),
 })

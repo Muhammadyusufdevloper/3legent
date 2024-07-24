@@ -60,11 +60,7 @@ const Header = () => {
                                         : <FiSearch />
                                 }
                             </button>
-                            {
-                                searchToggle
-                                    ? <Search />
-                                    : <></>
-                            }
+                            <Search searchToggle={searchToggle} setSearchToggle={setSearchToggle} />
                         </div>
                         <Link to={"/contact-us"} className="header__right-box-link">
                             <IoMdContact />
