@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import "./search.scss";
 import { Link } from "react-router-dom";
@@ -45,4 +45,4 @@ const Search = () => {
     )
 }
 
-export default Search
+export default memo(Search)

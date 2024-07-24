@@ -6,6 +6,7 @@ import Search from "./Search"
 import { HiOutlineShoppingBag } from "react-icons/hi"
 import { LuFacebook, LuHeart } from "react-icons/lu"
 import { AiOutlineYoutube } from "react-icons/ai"
+import { memo } from "react"
 const Menu = ({ menu, setMenu }) => {
     return (
         <>
@@ -57,4 +58,4 @@ const Menu = ({ menu, setMenu }) => {
     )
 }
 
-export default Menu
+export default memo(Menu)
