@@ -43,4 +43,12 @@
     color: #141718;
     display: none;
   }
+  @media (max-width: 500px) {
+    &__list {
+      display: none;
+    }
+    &__select {
+      display: block;
+    }
+  }
 }
