@@ -32,9 +32,10 @@ const ProductLoop = ({ data }) => {
                         <div className="product-loop__base-img">
                             <Zoom>
                                 <img
+                                    className="product-loop__img"
                                     src={data?.images[selectedImageIndex]}
                                     alt={data?.title}
-                                    style={{ width: '100%', height: 'auto' }}
+                                    style={{ width: '100%', height: '100%' }}
                                 />
                             </Zoom>
                             <div className="product-loop__images-box__discount">
