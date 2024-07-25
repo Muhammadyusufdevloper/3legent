@@ -11,7 +11,7 @@ const SingleRoutes = () => {
     const { data } = useGetProductByIdQuery(id)
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+    }, [id])
     return (
         <>
             <Breadcrumbs />

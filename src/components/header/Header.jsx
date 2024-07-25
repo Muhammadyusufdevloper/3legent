@@ -10,10 +10,12 @@ import { HiOutlineShoppingBag } from "react-icons/hi"
 import { LuHeart } from "react-icons/lu"
 import Search from "./components/Search"
 import Menu from "./components/Menu"
+import { useSelector } from "react-redux"
 const Header = () => {
     const [searchToggle, setSearchToggle] = useState(false)
     const [menu, setMenu] = useState(false)
     const [sapHeader, setSapHeader] = useState(true)
+    const wishlist = useSelector(state => state.wishlist.value)
     return (
         <>
             <div className={`sap-header${sapHeader ? "" : " sap-header--hidden"}`}>
@@ -63,16 +65,20 @@ const Header = () => {
                             </button>
                             <Search searchToggle={searchToggle} setSearchToggle={setSearchToggle} />
                         </div>
-                        <Link to={"/contact-us"} className="header__right-box-link">
+                        <Link to={"/login"} className="header__right-box-link">
                             <IoMdContact />
                         </Link>
-                        <Link to={"/login"} className="header__right-box-link header__right-box-link--cart--like">
+                        <Link to={"/cart"} className="header__right-box-link header__right-box-link--cart--like">
                             <HiOutlineShoppingBag />
                             <span>2</span>
                         </Link>
-                        <Link to={"/contact-us"} className="header__right-box-link header__right-box-link--cart--like">
-                            <LuHeart />
-                            <span>2</span>
+                        <Link to={"/wishlist"} className="header__right-box-link header__right-box-link--cart--like">
+                            < LuHeart />
+                            {
+                                wishlist?.length !== 0 ?
+                                    <span>{wishlist?.length}</span>
+                                    : <></>
+                            }
                         </Link>
                     </div>
                 </nav>

@@ -1,0 +1,15 @@
+.wishlist {
+  margin-top: 48px;
+  width: 100%;
+  min-height: calc(100vh - 298px - 41px - 63px);
+  margin-bottom: 40px;
+  &__title {
+    font-family: Poppins;
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 58px;
+    letter-spacing: -1px;
+    color: #000000;
+    margin-bottom: 24px;
+  }
+}

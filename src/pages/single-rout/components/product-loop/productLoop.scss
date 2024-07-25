@@ -257,6 +257,10 @@
     color: #141718;
     gap: 8px;
   }
+  &__cart-card__wishlist-btn-active {
+    background: #141718;
+    color: #fff;
+  }
   &__cart-card__add-btn {
     display: flex;
     align-items: center;

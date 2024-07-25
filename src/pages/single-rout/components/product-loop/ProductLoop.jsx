@@ -6,6 +6,8 @@ import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { GoHeart } from "react-icons/go";
 import Zoom from "react-medium-image-zoom";
 import 'react-medium-image-zoom/dist/styles.css';
+import { useDispatch, useSelector } from "react-redux";
+import { toggleHeart } from "../../../../context/slices/wishlistSlice";
 
 const ProductLoop = ({ data }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -23,7 +25,8 @@ const ProductLoop = ({ data }) => {
         }
         return res;
     };
-
+    let dispatch = useDispatch()
+    let wishlist = useSelector(state => state.wishlist.value)
     return (
         <section className="product-loop">
             <div className="container">
@@ -112,7 +115,7 @@ const ProductLoop = ({ data }) => {
                                         <p>1</p>
                                         <button>+</button>
                                     </div>
-                                    <button className="product-loop__cart-card__wishlist-btn">
+                                    <button onClick={() => dispatch(toggleHeart(data))} className={`product-loop__cart-card__wishlist-btn ${wishlist?.some((el) => el.id === data?.id) ? 'product-loop__cart-card__wishlist-btn-active' : ''}`}>
                                         <GoHeart />
                                         <p>Wishlist</p>
                                     </button>

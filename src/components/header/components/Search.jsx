@@ -13,10 +13,10 @@ const Search = ({ searchToggle, setSearchToggle }) => {
 
     let searchData = data?.map((product) => (
         <li key={product.id} className="search__search-dropdown__item">
-            <Link onClick={() => {
+            <Link to={`/single-routes/${product?.id}`} onClick={() => {
                 setSearchOn(false)
                 setSearchValue("")
-            }} to={`/admin/customer/${product?._id}`} className="search__search-dropdown__link">
+            }} className="search__search-dropdown__link">
                 <IoIosSearch />
                 <div className="search__search-dropdown__box">
                     <p>{product?.title}</p>

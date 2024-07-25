@@ -6,6 +6,7 @@ import { useGetProductsQuery } from "../../context/api/productApi"
 import { Pagination } from "@mui/material"
 import { useGetCategoryQuery } from "../../context/api/categoryApi"
 import Category from "../../components/category/Category"
+import ProductItemLoading from "../../components/loading/product-section-item/ProductItemLoading"
 
 const Shop = () => {
     const [categoryValue, setCategoryValue] = useState("all")
@@ -18,7 +19,7 @@ const Shop = () => {
     const handleChange = (event, value) => {
         setPage(value);
     };
-    let count = Math.floor(lengthData?.length / 9)
+    let count = Math.ceil(lengthData?.length / 9)
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -28,9 +29,12 @@ const Shop = () => {
             <section>
                 <div className="min-container">
                     <Category setPage={setPage} categoryValue={categoryValue} setCategoryValue={setCategoryValue} category={categoryList} />
-                    <ProductItems data={product} />
+                    {
+                        isFetching || isLoading ? <ProductItemLoading /> :
+                            <ProductItems data={product} isGrid={false} />
+                    }
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "24px", marginBottom: "24px" }}>
-                        <Pagination count={count + 1} page={page} onChange={handleChange} />
+                        <Pagination count={count} page={page} onChange={handleChange} />
                     </div>
                 </div>
             </section>

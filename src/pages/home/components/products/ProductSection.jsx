@@ -7,8 +7,13 @@ import ProductSectionLoading from "../../../../components/loading/product-sectio
 import { memo } from "react"
 import { FaRegStarHalfStroke } from "react-icons/fa6"
 import { FaRegStar, FaStar } from "react-icons/fa"
+import { useDispatch, useSelector } from "react-redux"
+import { toggleHeart } from "../../../../context/slices/wishlistSlice"
+import { IoHeart } from "react-icons/io5"
+import { addToCart } from "../../../../context/slices/cartSlice"
 const ProductSection = () => {
     const { data, isFetching, isLoading } = useGetProductsQuery({ limit: 6, page: 3 })
+    let dispatch = useDispatch()
     const getRating = (rating) => {
         let res = [];
         for (let i = 0; i < Math.trunc(rating); i++) {
@@ -22,6 +27,7 @@ const ProductSection = () => {
         }
         return res;
     };
+    const wishlist = useSelector(state => state.wishlist.value)
     return (
         <>
             <section className="product-section">
@@ -50,11 +56,11 @@ const ProductSection = () => {
                                                     <p className="product-section__images-box__new-text">New</p>
                                                     <p className="product-section__images-box__discount-text">-50%</p>
                                                 </div>
-                                                <button className="product-section__image-box__heart"><GoHeart /></button>
+                                                <button onClick={() => dispatch(toggleHeart(item))} className="product-section__image-box__heart"> {wishlist?.some((el) => el.id === item?.id) ? <IoHeart /> : <GoHeart />}</button>
                                                 <Link to={`/single-routes/${item?.id}`}>
                                                     <img src={item?.images[0]} alt={item?.title} />
                                                 </Link>
-                                                <button className="product-section__image-box__add-to-cart">Add To Cart</button>
+                                                <button onClick={() => dispatch(addToCart(item))} className="product-section__image-box__add-to-cart">Add To Cart</button>
                                             </div>
                                             <div className="product-section__info-box">
                                                 {getRating(item?.rating)}

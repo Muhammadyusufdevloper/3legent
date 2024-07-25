@@ -42,5 +42,8 @@ a {
   width: 100%;
   max-width: 866px;
   margin: 0 auto;
-  padding-left: 16px;
+  padding: 0 16px;
+}
+.note-found {
+  min-height: calc(100vh - 298px - 41px - 63px);
 }
