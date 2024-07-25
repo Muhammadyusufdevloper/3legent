@@ -5,14 +5,15 @@ import { MdArrowForward } from "react-icons/md";
 import { memo } from "react";
 
 const BlogCard = ({ isDateLink, data }) => {
+    let dataTrue = data || []
     return (
         <>
             <div className="blog-cards">
                 {
-                    data?.map((item) => (
-                        <div key={item._id} className="blog-card">
+                    dataTrue?.map((item) => (
+                        <div key={item.id} className="blog-card">
 
-                            <Link to={`/single-routes/${item?._id}`}>
+                            <Link to={`/single-routes/${item?.id}`}>
                                 <div className="blog-card-img">
                                     <img src={item?.images[0]} alt={item?.title} />
                                 </div>

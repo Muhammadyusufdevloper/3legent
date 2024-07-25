@@ -13,9 +13,10 @@ import Menu from "./components/Menu"
 const Header = () => {
     const [searchToggle, setSearchToggle] = useState(false)
     const [menu, setMenu] = useState(false)
+    const [sapHeader, setSapHeader] = useState(true)
     return (
         <>
-            <div className="sap-header">
+            <div className={`sap-header${sapHeader ? "" : " sap-header--hidden"}`}>
                 <div className="sap-header__base-cart"></div>
                 <div className="sap-header__left-box">
                     <img src={sapHeaderIcon} alt="Sap header icons" />
@@ -26,11 +27,11 @@ const Header = () => {
                         </p>
                         <IoArrowForwardOutline />
                     </Link>
-                    <button className="sap-header__close sap-header__close-responsive">
+                    <button onClick={() => setSapHeader(false)} className="sap-header__close sap-header__close-responsive">
                         <IoClose />
                     </button>
                 </div>
-                <button className="sap-header__close">
+                <button onClick={() => setSapHeader(false)} className="sap-header__close">
                     <IoClose />
                 </button>
             </div>
@@ -41,7 +42,7 @@ const Header = () => {
                         <button onClick={() => setMenu(true)} className="header__menu-btn">
                             <IoMenu />
                         </button>
-                        <Link className="header__logo-link">
+                        <Link to={"/"} className="header__logo-link">
                             <img src={siteLogo} alt="site logo" />
                         </Link>
                     </div>
