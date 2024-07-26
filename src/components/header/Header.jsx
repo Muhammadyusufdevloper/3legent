@@ -69,7 +69,7 @@ const Header = () => {
                         <Link to={"/login"} className="header__right-box-link">
                             <IoMdContact />
                         </Link>
-                        <Link to={"/cart"} className="header__right-box-link header__right-box-link--cart--like">
+                        <Link to={"/cart/shopping-cart"} className="header__right-box-link header__right-box-link--cart--like">
                             <HiOutlineShoppingBag />
                             {
                                 cartData?.length !== 0 ?

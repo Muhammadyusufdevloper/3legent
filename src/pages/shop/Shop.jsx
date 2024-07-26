@@ -13,13 +13,13 @@ const Shop = () => {
     const [page, setPage] = useState(1);
     const category = categoryValue === "all" ? "" : categoryValue
     const { data: lengthData } = useGetProductsQuery({ category })
-    const { data: product, isFetching, isLoading } = useGetProductsQuery({ category, limit: 9, page })
+    const { data: product, isFetching, isLoading } = useGetProductsQuery({ category, limit: 8, page })
     const { data: categoryList } = useGetCategoryQuery()
 
     const handleChange = (event, value) => {
         setPage(value);
     };
-    let count = Math.ceil(lengthData?.length / 9)
+    let count = Math.ceil(lengthData?.length / 8)
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
@@ -27,7 +27,7 @@ const Shop = () => {
         <>
             <HeroBase title={"Shop Page"} desc={"Let’s design the place you always imagined."} path={"Shop"} isImages={false} />
             <section>
-                <div className="min-container">
+                <div className="container">
                     <Category setPage={setPage} categoryValue={categoryValue} setCategoryValue={setCategoryValue} category={categoryList} />
                     {
                         isFetching || isLoading ? <ProductItemLoading /> :

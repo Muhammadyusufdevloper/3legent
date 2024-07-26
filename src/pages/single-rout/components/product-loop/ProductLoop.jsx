@@ -8,6 +8,7 @@ import Zoom from "react-medium-image-zoom";
 import 'react-medium-image-zoom/dist/styles.css';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleHeart } from "../../../../context/slices/wishlistSlice";
+import { addToCart, decrementCart, removeFromCart } from "../../../../context/slices/cartSlice";
 
 const ProductLoop = ({ data }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -27,6 +28,8 @@ const ProductLoop = ({ data }) => {
     };
     let dispatch = useDispatch()
     let wishlist = useSelector(state => state.wishlist.value)
+    let cartData = useSelector(state => state.cart.value)
+    let isCart = (cartData.find(el => el.id === data?.id));
     return (
         <section className="product-loop">
             <div className="container">
@@ -110,17 +113,24 @@ const ProductLoop = ({ data }) => {
                             </div>
                             <div className="product-loop__cart-card">
                                 <div className="product-loop__cart-card__buttons">
-                                    <div className="product-loop__cart-card__part">
-                                        <button>-</button>
-                                        <p>1</p>
-                                        <button>+</button>
-                                    </div>
+                                    {
+                                        !isCart ?
+                                            <button onClick={() => dispatch(addToCart(data))} className="product-loop__cart-card__add-btn">Add To Cart</button>
+                                            :
+                                            <div className="product-loop__cart-card__part">
+                                                <button onClick={() => dispatch(
+                                                    isCart?.quantity <= 1 ? removeFromCart(data?.id) :
+                                                        decrementCart(data)
+                                                )}>-</button>
+                                                <p>{isCart?.quantity}</p>
+                                                <button onClick={() => dispatch(addToCart(data))}>+</button>
+                                            </div>
+                                    }
                                     <button onClick={() => dispatch(toggleHeart(data))} className={`product-loop__cart-card__wishlist-btn ${wishlist?.some((el) => el.id === data?.id) ? 'product-loop__cart-card__wishlist-btn-active' : ''}`}>
                                         <GoHeart />
                                         <p>Wishlist</p>
                                     </button>
                                 </div>
-                                <button className="product-loop__cart-card__add-btn">Add To Cart</button>
                             </div>
                         </div>
                         <div className="product-loop__meta-card">

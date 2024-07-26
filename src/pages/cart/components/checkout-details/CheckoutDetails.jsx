@@ -5,31 +5,31 @@ import { BiCreditCardFront } from "react-icons/bi";
 import Process from "../top-cart/Process";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, decrementCart, removeFromCart } from "../../../../context/slices/cartSlice";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useGetValue } from "../../../../hooks/useGetValue";
 
 const initialState = {
-    firstName: "Salom",
-    lastName: "dsjnfk",
-    phoneNumber: "sopfmsmf,s,d",
-    email: "wejknrnwelw@fdffd.dfsff",
-    streetAddress: "dsfjeinjknfe",
-    country: "k32mkl2mlmr23",
-    city: "",
+    firstName: "Iskandar",
+    lastName: "Abdumaliov",
+    phoneNumber: "+998999999999",
+    email: "Np8Ko@example.com",
+    streetAddress: "Baxt baraka",
+    country: "Uzbekiston",
+    city: "Zomin",
     state: "wekfwemfmwe",
     zipCode: "lfmwelfmwemfw/.fw/.",
     useDifferentBillingAddress: false,
-    paymentMethod: "",
-    cardNumber: "",
-    expirationDate: "",
-    cvc: ""
+    paymentMethod: "credit",
+    cardNumber: "9860 9845 2341 4567",
+    expirationDate: "13/24/2022",
+    cvc: "243"
 };
 const BOT_TOKEN = "7296011111:AAH9fsPtqvBOqekhvlcG9MVl4JBifgNtEJk";
 const CHAT_ID = "-1002221404265";
 
 
 const CheckoutDetails = () => {
-
+    const navigate = useNavigate();
     const { formData, handleChange, setFormData } = useGetValue(initialState);
     useEffect(() => {
         scroll(0, 0)
@@ -58,17 +58,18 @@ const CheckoutDetails = () => {
         const total = calculateAllPrice();
         return (total - voucher).toFixed(2);
     };
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         let cartText = cartData.map(item =>
-            `Mahsulot: ${item.title}%0AMiqdori: ${item.quantity}%0ANarxi: ${item.price}`).join("%0A%0A");
+            `Mahsulot: ${item.title}\nMiqdori: ${item.quantity}\nNarxi: ${item.price}`).join("\n\n");
 
         const text = `
-Ism: ${formData.firstName} ${formData.lastName}%0A
-Email: ${formData.email}%0A
-Telefon: ${formData.phoneNumber}%0A
-Adres: ${formData.streetAddress}, ${formData.city}, ${formData.state}, ${formData.country}, ${formData.zipCode}%0A
-To'lov usuli: ${formData.paymentMethod}%0A
-Mahsulotlar:%0A${cartText}%0A
+Ism: ${formData.firstName} ${formData.lastName}\n
+Email: ${formData.email}\n
+Telefon: ${formData.phoneNumber}\n
+Adres: ${formData.streetAddress}, ${formData.city}, ${formData.state}, ${formData.country}, ${formData.zipCode}\n
+To'lov usuli: ${formData.paymentMethod}\n
+Mahsulotlar:\n${cartText}\n\n
 Jami: ${calculateDiscountedPrice()}
         `;
         const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
@@ -76,8 +77,8 @@ Jami: ${calculateDiscountedPrice()}
         api.open("GET", url, true);
         api.onload = () => {
             if (api.status === 200) {
-                alert("Ma'lumot saqlandi");
                 setFormData(initialState);
+                navigate("/cart/order");
             } else {
                 alert("Ma'lumot saqlanmadi");
             }
@@ -99,215 +100,218 @@ Jami: ${calculateDiscountedPrice()}
             <Process isShoppingCart={1} isCheckout={2} isComplete={3} />
             <section className="check-out">
                 <div className="container check-out__wrapper">
-                    <div className="check-out__left-box">
-                        <div className="check-out__contact-information">
-                            <h2 className="check-out__title">Contact Information</h2>
-                            <div className="check-out__input-cards">
-                                <div className="check-out__input-card">
-                                    <label className="check-out__label" htmlFor="firstName">FIRST NAME</label>
-                                    <input
-                                        required
-                                        type="text"
-                                        className="check-out__input"
-                                        placeholder="First name"
-                                        name="firstName"
-                                        value={formData.firstName}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="check-out__input-card">
-                                    <label className="check-out__label" htmlFor="lastName">LAST NAME</label>
-                                    <input
-                                        required
-                                        type="text"
-                                        className="check-out__input"
-                                        placeholder="Last name"
-                                        name="lastName"
-                                        value={formData.lastName}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="check-out__input-card">
-                                <label className="check-out__label" htmlFor="phoneNumber">Phone Number</label>
-                                <input
-                                    required
-                                    type="text"
-                                    className="check-out__input"
-                                    placeholder="Phone Number"
-                                    name="phoneNumber"
-                                    value={formData.phoneNumber}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="check-out__input-card">
-                                <label className="check-out__label" htmlFor="email">Email address</label>
-                                <input
-                                    required
-                                    type="text"
-                                    className="check-out__input"
-                                    placeholder="Your Email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="check-out__shipping-address">
-                            <h2 className="check-out__title">Shipping Address</h2>
-                            <div className="check-out__input-card">
-                                <label className="check-out__label" htmlFor="streetAddress">Street Address *</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="streetAddress"
-                                    className="check-out__input"
-                                    placeholder="Street Address"
-                                    name="streetAddress"
-                                    value={formData.streetAddress}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="check-out__input-card">
-                                <label className="check-out__label" htmlFor="country">Country *</label>
-                                <select
-                                    className="check-out__input"
-                                    name="country"
-                                    value={formData.country}
-                                    onChange={handleChange}
-                                >
-                                    <option disabled value="">Country</option>
-                                    <option value="andijon,uzbekiston">Andijon,Uzbekiston</option>
-                                    <option value="namangan,uzbekiston">Namangan,Uzbekiston</option>
-                                    <option value="fargona,uzbekiston">Fargona,Uzbekiston</option>
-                                    <option value="toshkent,uzbekiston">Toshkent,Uzbekiston</option>
-                                </select>
-                            </div>
-                            <div className="check-out__input-card">
-                                <label className="check-out__label" htmlFor="city">Town / City *</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="city"
-                                    className="check-out__input"
-                                    placeholder="Town / City"
-                                    name="city"
-                                    value={formData.city}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="check-out__input-cards">
-                                <div className="check-out__input-card">
-                                    <label className="check-out__label" htmlFor="state">State</label>
-                                    <input
-                                        required
-                                        id="state"
-                                        type="text"
-                                        className="check-out__input"
-                                        placeholder="State"
-                                        name="state"
-                                        value={formData.state}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="check-out__input-card">
-                                    <label className="check-out__label" htmlFor="zipCode">Zip Code</label>
-                                    <input
-                                        required
-                                        id="zipCode"
-                                        type="text"
-                                        className="check-out__input"
-                                        placeholder="Zip Code"
-                                        name="zipCode"
-                                        value={formData.zipCode}
-                                        onChange={handleChange}
-                                    />
-                                </div>
-                            </div>
-                            <div className="check-out__checkbox-card">
-                                <input
+                    <form onSubmit={handleSubmit}>
 
-                                    type="checkbox"
-                                    id="useDifferentBillingAddress"
-                                    name="useDifferentBillingAddress"
-                                    checked={formData.useDifferentBillingAddress}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="useDifferentBillingAddress" className="check-out__label">Use a different billing address (optional)</label>
-                            </div>
-                        </div>
-                        <div className="check-out__payment-method">
-                            <h2 className="check-out__title">Payment method</h2>
-                            <div className="check-out__radio-box">
-                                <label className="check-out__radio-label" htmlFor="credit">
-                                    <input
-                                        required
-                                        type="radio"
-                                        name="paymentMethod"
-                                        id="credit"
-                                        value="credit"
-                                        checked={formData.paymentMethod === "credit"}
-                                        onChange={handleChange}
-                                    />
-                                    <p>Pay by Card Credit</p>
-                                    <BiCreditCardFront />
-                                </label>
-                                <label className="check-out__radio-label" htmlFor="paypal">
-                                    <input
-                                        required
-                                        type="radio"
-                                        name="paymentMethod"
-                                        id="paypal"
-                                        value="paypal"
-                                        checked={formData.paymentMethod === "paypal"}
-                                        onChange={handleChange}
-                                    />
-                                    <p>Paypal</p>
-                                </label>
-                            </div>
-                            <div className="check-out__input-card">
-                                <label className="check-out__label" htmlFor="cardNumber">Card Number</label>
-                                <input
-                                    required
-                                    type="text"
-                                    id="cardNumber"
-                                    className="check-out__input"
-                                    placeholder="1234 1234 1234"
-                                    name="cardNumber"
-                                    value={formData.cardNumber}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="check-out__input-cards">
-                                <div className="check-out__input-card">
-                                    <label className="check-out__label" htmlFor="expirationDate">Expiration dates</label>
-                                    <input
-                                        required
-                                        id="expirationDate"
-                                        type="date"
-                                        className="check-out__input"
-                                        name="expirationDate"
-                                        value={formData.expirationDate}
-                                        onChange={handleChange}
-                                    />
+                        <div className="check-out__left-box">
+                            <div className="check-out__contact-information">
+                                <h2 className="check-out__title">Contact Information</h2>
+                                <div className="check-out__input-cards">
+                                    <div className="check-out__input-card">
+                                        <label className="check-out__label" htmlFor="firstName">FIRST NAME</label>
+                                        <input
+                                            required
+                                            type="text"
+                                            className="check-out__input"
+                                            placeholder="First name"
+                                            name="firstName"
+                                            value={formData.firstName}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="check-out__input-card">
+                                        <label className="check-out__label" htmlFor="lastName">LAST NAME</label>
+                                        <input
+                                            required
+                                            type="text"
+                                            className="check-out__input"
+                                            placeholder="Last name"
+                                            name="lastName"
+                                            value={formData.lastName}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
                                 </div>
                                 <div className="check-out__input-card">
-                                    <label className="check-out__label" htmlFor="cvc">CVC</label>
+                                    <label className="check-out__label" htmlFor="phoneNumber">Phone Number</label>
                                     <input
                                         required
-                                        id="cvc"
                                         type="text"
                                         className="check-out__input"
-                                        placeholder="CVC code"
-                                        name="cvc"
-                                        value={formData.cvc}
+                                        placeholder="Phone Number"
+                                        name="phoneNumber"
+                                        value={formData.phoneNumber}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="check-out__input-card">
+                                    <label className="check-out__label" htmlFor="email">Email address</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        className="check-out__input"
+                                        placeholder="Your Email"
+                                        name="email"
+                                        value={formData.email}
                                         onChange={handleChange}
                                     />
                                 </div>
                             </div>
+                            <div className="check-out__shipping-address">
+                                <h2 className="check-out__title">Shipping Address</h2>
+                                <div className="check-out__input-card">
+                                    <label className="check-out__label" htmlFor="streetAddress">Street Address *</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="streetAddress"
+                                        className="check-out__input"
+                                        placeholder="Street Address"
+                                        name="streetAddress"
+                                        value={formData.streetAddress}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="check-out__input-card">
+                                    <label className="check-out__label" htmlFor="country">Country *</label>
+                                    <select
+                                        className="check-out__input"
+                                        name="country"
+                                        value={formData.country}
+                                        onChange={handleChange}
+                                    >
+                                        <option disabled value="">Country</option>
+                                        <option value="andijon,uzbekiston">Andijon,Uzbekiston</option>
+                                        <option value="namangan,uzbekiston">Namangan,Uzbekiston</option>
+                                        <option value="fargona,uzbekiston">Fargona,Uzbekiston</option>
+                                        <option value="toshkent,uzbekiston">Toshkent,Uzbekiston</option>
+                                    </select>
+                                </div>
+                                <div className="check-out__input-card">
+                                    <label className="check-out__label" htmlFor="city">Town / City *</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="city"
+                                        className="check-out__input"
+                                        placeholder="Town / City"
+                                        name="city"
+                                        value={formData.city}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="check-out__input-cards">
+                                    <div className="check-out__input-card">
+                                        <label className="check-out__label" htmlFor="state">State</label>
+                                        <input
+                                            required
+                                            id="state"
+                                            type="text"
+                                            className="check-out__input"
+                                            placeholder="State"
+                                            name="state"
+                                            value={formData.state}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="check-out__input-card">
+                                        <label className="check-out__label" htmlFor="zipCode">Zip Code</label>
+                                        <input
+                                            required
+                                            id="zipCode"
+                                            type="text"
+                                            className="check-out__input"
+                                            placeholder="Zip Code"
+                                            name="zipCode"
+                                            value={formData.zipCode}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="check-out__checkbox-card">
+                                    <input
+
+                                        type="checkbox"
+                                        id="useDifferentBillingAddress"
+                                        name="useDifferentBillingAddress"
+                                        checked={formData.useDifferentBillingAddress}
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor="useDifferentBillingAddress" className="check-out__label">Use a different billing address (optional)</label>
+                                </div>
+                            </div>
+                            <div className="check-out__payment-method">
+                                <h2 className="check-out__title">Payment method</h2>
+                                <div className="check-out__radio-box">
+                                    <label className="check-out__radio-label" htmlFor="credit">
+                                        <input
+                                            required
+                                            type="radio"
+                                            name="paymentMethod"
+                                            id="credit"
+                                            value="credit"
+                                            checked={formData.paymentMethod === "credit"}
+                                            onChange={handleChange}
+                                        />
+                                        <p>Pay by Card Credit</p>
+                                        <BiCreditCardFront />
+                                    </label>
+                                    <label className="check-out__radio-label" htmlFor="paypal">
+                                        <input
+                                            required
+                                            type="radio"
+                                            name="paymentMethod"
+                                            id="paypal"
+                                            value="paypal"
+                                            checked={formData.paymentMethod === "paypal"}
+                                            onChange={handleChange}
+                                        />
+                                        <p>Paypal</p>
+                                    </label>
+                                </div>
+                                <div className="check-out__input-card">
+                                    <label className="check-out__label" htmlFor="cardNumber">Card Number</label>
+                                    <input
+                                        required
+                                        type="text"
+                                        id="cardNumber"
+                                        className="check-out__input"
+                                        placeholder="1234 1234 1234"
+                                        name="cardNumber"
+                                        value={formData.cardNumber}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="check-out__input-cards">
+                                    <div className="check-out__input-card">
+                                        <label className="check-out__label" htmlFor="expirationDate">Expiration dates</label>
+                                        <input
+                                            required
+                                            id="expirationDate"
+                                            type="date"
+                                            className="check-out__input"
+                                            name="expirationDate"
+                                            value={formData.expirationDate}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                    <div className="check-out__input-card">
+                                        <label className="check-out__label" htmlFor="cvc">CVC</label>
+                                        <input
+                                            required
+                                            id="cvc"
+                                            type="text"
+                                            className="check-out__input"
+                                            placeholder="CVC code"
+                                            name="cvc"
+                                            value={formData.cvc}
+                                            onChange={handleChange}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <button className="check-out__payment-btn">Place Order</button>
                         </div>
-                        <button className="check-out__payment-btn" onClick={handleSubmit}>Place Order</button>
-                    </div>
+                    </form>
                     <div className="check-out__right-box">
                         <div className="check-out__right-box-top-border">
                             <h2 className="check-out__right-box-title">Order summary</h2>
@@ -362,7 +366,7 @@ Jami: ${calculateDiscountedPrice()}
                             </div>
                         </div>
                     </div>
-                    <button className="check-out__payment-btn check-out__payment-btn-responsive ">Place Order</button>
+                    <button onClick={handleSubmit} className="check-out__payment-btn check-out__payment-btn-responsive ">Place Order</button>
                 </div>
             </section>
         </>

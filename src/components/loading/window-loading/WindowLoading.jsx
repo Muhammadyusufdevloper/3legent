@@ -6,9 +6,7 @@ const WindowLoading = () => {
         <>
             <section className="window-loading">
                 <div className="window-loading__wrapper">
-                    <div className="window-loading__cards">
-                        <div className="window-loading__card"></div>
-                    </div>
+                    <span className="loader"></span>
                 </div>
             </section>
         </>

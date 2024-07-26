@@ -1,6 +1,9 @@
 import { Suspense, lazy, memo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import WindowLoading from './components/loading/window-loading/WindowLoading';
+const OrderComplete = lazy(() => import('./pages/cart/components/order-complete/OrderComplete'))
+const CheckoutDetails = lazy(() => import('./pages/cart/components/checkout-details/CheckoutDetails'));
+const ShoppingCart = lazy(() => import('./pages/cart/components/shopping-cart/ShoppingCart'));
 const Layout = lazy(() => import('./layout/Layout'));
 const Home = lazy(() => import('./pages/home/Home'));
 const SingleRoutes = lazy(() => import('./pages/single-rout/SingleRoutes'));
@@ -21,7 +24,11 @@ const App = () => {
           <Route path="shop" element={<Shop />} />
           <Route path="blog" element={<Blog />} />
           <Route path="wishlist" element={<Wishlist />} />
-          <Route path="cart" element={<Cart />} />
+          <Route path="cart" element={<Cart />} >
+            <Route path='shopping-cart' element={<ShoppingCart />} />
+            <Route path='checkout' element={<CheckoutDetails />} />
+            <Route path='order' element={<OrderComplete />} />
+          </Route>
           <Route path="*" element={<NoteFound />} />
         </Route>
         <Route path="login" element={<Login />} />

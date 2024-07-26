@@ -1,5 +1,5 @@
 import { useEffect, memo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
 import { FiPlus, FiMinus } from "react-icons/fi";
@@ -13,10 +13,11 @@ import "./ShoppingCart.scss";
 import Process from "../top-cart/Process";
 import Empty from "../../../../components/empty/Empty";
 import images from "../../../../assets/cart/cart.png";
-const ShoppingCart = ({ setShoppingCartCheckout }) => {
+const ShoppingCart = () => {
     const [voucher, setVoucher] = useState(0);
     const [coupon, setCoupon] = useState("");
     const cartData = useSelector((state) => state.cart.value);
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -45,7 +46,7 @@ const ShoppingCart = ({ setShoppingCartCheckout }) => {
         const total = calculateAllPrice();
         return (total - voucher).toFixed(2);
     };
-
+    localStorage.setItem("total", String(calculateDiscountedPrice()));
     return (
         <section className="cart">
             <div className="container">
@@ -71,7 +72,7 @@ const ShoppingCart = ({ setShoppingCartCheckout }) => {
                                             <div key={product.id} className="cart__box__bottom__item">
                                                 {/*  */}
                                                 <div className="cart__box__bottom__item__left">
-                                                    <Link to={`/products/${product.id}`}>
+                                                    <Link to={`/single-routes/${product.id}`}>
                                                         <img src={product?.images[0]} alt={product?.title} />
                                                     </Link>
                                                     <div>
@@ -79,7 +80,7 @@ const ShoppingCart = ({ setShoppingCartCheckout }) => {
                                                             <h3 title={product?.title}>{product?.title}</h3>
                                                         </Link>
                                                         <button
-                                                            onClick={() => dispatch(removeFromCart(product))}
+                                                            onClick={() => dispatch(removeFromCart(product.id))}
                                                             className="cart__box__bottom__item__remove-btn"
                                                         >
                                                             {" "}
@@ -196,7 +197,7 @@ const ShoppingCart = ({ setShoppingCartCheckout }) => {
                                                 <p>${calculateDiscountedPrice()}</p>
                                             </div>
                                         </div>
-                                        <button onClick={() => setShoppingCartCheckout(false)}>Checkout</button>
+                                        <button onClick={() => navigate("/cart/checkout")}>Checkout</button>
                                     </div>
                                 </div>
                             </div>

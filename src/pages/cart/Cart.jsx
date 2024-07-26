@@ -1,18 +1,9 @@
-import { useState } from "react"
-import CheckoutDetails from "./components/checkout-details/CheckoutDetails"
-import ShoppingCart from "./components/shopping-cart/ShoppingCart"
+import { Outlet } from "react-router-dom"
 
 const Cart = () => {
-    const [shoppingCartCheckout, setShoppingCartCheckout] = useState(true)
     return (
         <>
-            {
-
-                shoppingCartCheckout ?
-                    <ShoppingCart setShoppingCartCheckout={setShoppingCartCheckout} />
-                    :
-                    <CheckoutDetails />
-            }
+            <Outlet />
         </>
     )
 }

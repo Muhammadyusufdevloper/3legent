@@ -8,7 +8,7 @@ import { IoHeart } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { toggleHeart } from "../../context/slices/wishlistSlice"
 import { addToCart } from "../../context/slices/cartSlice"
-const ProductItems = ({ data, isGrid }) => {
+const ProductItems = ({ data }) => {
     const getRating = (rating) => {
         let res = [];
         for (let i = 0; i < Math.trunc(rating); i++) {
@@ -24,9 +24,10 @@ const ProductItems = ({ data, isGrid }) => {
     };
     const wishlist = useSelector(state => state.wishlist.value)
     let dispatch = useDispatch()
+
     return (
         <>
-            <div className={` ${isGrid ? "product-item__cards-grid" : "product-item__cards"}`}>
+            <div className={`  product-item__cards-grid `}>
                 {
                     data?.map((item) => (
                         <div key={item.id} className="product-item__card">
