@@ -16,6 +16,7 @@ const Header = () => {
     const [menu, setMenu] = useState(false)
     const [sapHeader, setSapHeader] = useState(true)
     const wishlist = useSelector(state => state.wishlist.value)
+    const cartData = useSelector(state => state.cart.value)
     return (
         <>
             <div className={`sap-header${sapHeader ? "" : " sap-header--hidden"}`}>
@@ -70,7 +71,11 @@ const Header = () => {
                         </Link>
                         <Link to={"/cart"} className="header__right-box-link header__right-box-link--cart--like">
                             <HiOutlineShoppingBag />
-                            <span>2</span>
+                            {
+                                cartData?.length !== 0 ?
+                                    <span>{cartData?.length}</span>
+                                    : <></>
+                            }
                         </Link>
                         <Link to={"/wishlist"} className="header__right-box-link header__right-box-link--cart--like">
                             < LuHeart />

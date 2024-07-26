@@ -1,0 +1,32 @@
+.window-loading {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #40bfff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 104px;
+    height: 104px;
+    background-color: white;
+    border-radius: 16px;
+  }
+  &__cards {
+    width: 64px;
+    height: 64px;
+    background-color: #40bfff;
+    border-radius: 16px;
+    transform: rotate(130deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__card {
+    width: 26px;
+    height: 26px;
+    background-color: #fff;
+  }
+}

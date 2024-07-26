@@ -1,13 +1,18 @@
-import { Link, NavLink } from "react-router-dom"
-import "./menu.scss"
-import siteLogo from "../../../assets/header/Logo.svg"
-import { IoClose, IoLogoInstagram } from "react-icons/io5"
-import Search from "./Search"
-import { HiOutlineShoppingBag } from "react-icons/hi"
-import { LuFacebook, LuHeart } from "react-icons/lu"
-import { AiOutlineYoutube } from "react-icons/ai"
-import { memo } from "react"
+import { memo } from "react";
+import { Link, NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+import "./menu.scss";
+import siteLogo from "../../../assets/header/Logo.svg";
+import { IoClose, IoLogoInstagram } from "react-icons/io5";
+import Search from "./Search";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { LuFacebook, LuHeart } from "react-icons/lu";
+import { AiOutlineYoutube } from "react-icons/ai";
+import { useSelector } from "react-redux";
+
 const Menu = ({ menu, setMenu }) => {
+    const wishlist = useSelector(state => state.wishlist.value);
+    const cartData = useSelector(state => state.cart.value);
     return (
         <>
             <div onClick={() => setMenu(false)} className={`header__menu__overlay ${menu ? "header__menu__overlay-show" : ""}`}></div>
@@ -28,25 +33,21 @@ const Menu = ({ menu, setMenu }) => {
                 <div className="header__menu__bottom-box">
                     <ul className="header__menu__menu-list">
                         <li className="header__menu__menu-item"><NavLink className="header__menu__menu-link" to={"/Cart"}>
-                            <p>
-                                Cart
-                            </p>
+                            <p>Cart</p>
                             <div className="header__menu__menu-link__cart--link">
                                 <HiOutlineShoppingBag />
-                                <span>2</span>
+                                {cartData?.length !== 0 ? <span>{cartData?.length}</span> : <></>}
                             </div>
                         </NavLink></li>
                         <li className="header__menu__menu-item"><NavLink className="header__menu__menu-link" to={"/Wishlist"}>
                             <p>Wishlist</p>
                             <div className="header__menu__menu-link__cart--link">
                                 <LuHeart />
-                                <span>2</span>
+                                {wishlist?.length !== 0 ? <span>{wishlist?.length}</span> : <></>}
                             </div>
                         </NavLink></li>
                     </ul>
-                    <Link to={"/Login"} className="header__menu__menu-link-login">
-                        Login
-                    </Link>
+                    <Link to={"/Login"} className="header__menu__menu-link-login">Login</Link>
                     <div className="header__menu__menu-buttons">
                         <IoLogoInstagram />
                         <LuFacebook />
@@ -55,7 +56,12 @@ const Menu = ({ menu, setMenu }) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default memo(Menu)
+Menu.propTypes = {
+    menu: PropTypes.bool.isRequired,
+    setMenu: PropTypes.func.isRequired,
+};
+
+export default memo(Menu);
