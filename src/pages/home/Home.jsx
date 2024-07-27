@@ -14,7 +14,7 @@ const Home = () => {
             <BannerGrid />
             <ProductSection />
             <Service />
-            <Banner />
+            <Banner isContainer={""} isDesc={"It’s more affordable than ever to give every room in your home a stylish makeover"} isTitle={"HUNDREDS of New lower prices!"} isSpan={"SALE UP TO 35% OFF"} />
             <BlogSection />
             <Newsletter />
         </>

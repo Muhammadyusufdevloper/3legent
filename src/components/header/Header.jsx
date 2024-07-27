@@ -64,7 +64,7 @@ const Header = () => {
                                         : <FiSearch />
                                 }
                             </button>
-                            <Search searchToggle={searchToggle} setSearchToggle={setSearchToggle} />
+                            <Search isSearch={true} searchToggle={searchToggle} setSearchToggle={setSearchToggle} />
                         </div>
                         <Link to={"/login"} className="header__right-box-link">
                             <IoMdContact />

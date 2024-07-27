@@ -50,6 +50,10 @@
     line-height: 32px;
     color: #141718;
     margin-bottom: 24px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
   }
   &__link {
     font-size: 16px;
@@ -101,7 +105,7 @@
     &__right-box {
       width: 100%;
       padding-left: 50px;
-      height: 450px;
+      height: 420px;
     }
   }
   @media (max-width: 650px) {
@@ -127,7 +131,7 @@
     &__right-box {
       width: 100%;
       padding-left: 32px;
-      height: 375px;
+      height: 315px;
     }
     &__title {
       font-size: 34px;
@@ -148,7 +152,6 @@
     &__right-box {
       width: 100%;
       padding-left: 32px;
-      height: 375px;
     }
     &__title {
       font-size: 30px;

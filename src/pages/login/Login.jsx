@@ -1,35 +1,87 @@
 import "./login.scss"
 import images from "../../assets/login/Left.jpg"
-import { Link } from "react-router-dom"
+import { memo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
+import { useGetValue } from "../../hooks/useGetValue";
+
+const initialState = {
+    username: "john32",
+    password: "87654321",
+};
+
 const Login = () => {
+    const [checkPassword, setCheckPassword] = useState(false);
+    const { formData, handleChange } = useGetValue(initialState);
+    const navigate = useNavigate();
+    const handleLogin = (e) => {
+        e.preventDefault();
+        if (formData.username === "john32" && formData.password === "87654321") {
+            localStorage.setItem("x-auth-token", JSON.stringify(formData));
+            navigate("/admin/products");
+        } else {
+            toast.error("Username and password incorrect");
+        }
+    };
+
     return (
         <>
-            <section className="login">
-                <div className="login__left-box">
-                    <img src={images} alt="img title" />
-                </div>
+            <div className="login">
+                <div className="login__left">
 
-                <div className="login__right-box">
-                    <h1 className="login__title">Sign In</h1>
-                    <p className="login__text">Don’t have an accout yet? <span>Sign Up</span></p>
-                    <form className="login__form">
-                        <input type="text" className="login__form-input" placeholder="Your usernam or email address" />
-                        <div>
-                            <input type="password" className="login__form-input" placeholder="Password" />
+                    <img
+                        className="login__left-img"
+                        src={images}
+                        alt="login bg  image"
+                    />
+                </div>
+                <form
+                    onSubmit={handleLogin}
+                    className="login__form container"
+                    action=""
+                >
+                    <div className="login__form-box">
+                        <h2>Sign In</h2>
+                        <p className="login__form-text">
+                            Don’t have an accout yet? <Link to={"/register"}>Sign Up</Link>
+                        </p>
+                        <input
+                            className="login__form-input"
+                            type="text"
+                            placeholder="Your username or email address"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                        />
+                        <div className="login__form__input-box">
+                            <input
+                                type={checkPassword ? "text" : "password"}
+                                placeholder="Password"
+                                className="login__form__password login__form-input"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                            {checkPassword ? (
+                                <IoEyeOffOutline onClick={() => setCheckPassword(false)} />
+                            ) : (
+                                <IoEyeOutline onClick={() => setCheckPassword(true)} />
+                            )}
                         </div>
-                        <div className="login__form-bottom-box">
+                        <div className="login__form-middle">
                             <div>
-                                <input type="checkbox" />
-                                <label htmlFor=""></label>
+                                <input id="remember" type="checkbox" />
+                                <label htmlFor="remember">Remember me</label>
                             </div>
-                            <Link className="login__form-link">Forgot password?</Link>
+                            <p>Forgot password?</p>
                         </div>
-                        <button className="login__form-btn">Sign In</button>
-                    </form>
-                </div>
-            </section>
+                        <button>Sign in</button>
+                    </div>
+                </form>
+            </div>
         </>
-    )
-}
+    );
+};
 
-export default Login
+export default memo(Login);

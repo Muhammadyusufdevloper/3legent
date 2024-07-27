@@ -1,9 +1,4 @@
 .product-item {
-  &__cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
   &__cards-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -127,6 +122,27 @@
   }
   &__card:hover &__image-box__add-to-cart {
     opacity: 1;
+  }
+  &__card-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    gap: 20px;
+  }
+  &__button {
+    background-color: #141718;
+    width: 50%;
+    padding: 6px 16px;
+    border-radius: 4px;
+    color: #fff;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 22px;
+    border: none;
+    cursor: pointer;
+    background-color: #1d1e1f;
   }
   @media (max-width: 850px) {
     &__cards-grid,

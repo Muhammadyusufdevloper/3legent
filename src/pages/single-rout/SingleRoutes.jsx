@@ -8,14 +8,14 @@ import Tabs from "./components/tabs/Tabs"
 
 const SingleRoutes = () => {
     let { id } = useParams()
-    const { data } = useGetProductByIdQuery(id)
+    const { data, isFetching, isLoading } = useGetProductByIdQuery(id)
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [id])
     return (
         <>
             <Breadcrumbs />
-            <ProductLoop data={data} />
+            <ProductLoop isFetching={isFetching} isLoading={isLoading} data={data} />
             <Tabs />
             <Newsletter />
         </>

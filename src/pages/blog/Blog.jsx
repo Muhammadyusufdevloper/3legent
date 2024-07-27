@@ -21,8 +21,8 @@ const Blog = () => {
     };
     let count = Math.floor(lengthData?.length / 9)
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+        window.scrollTo(0, 500)
+    }, [page])
     return (
         <>
             <Breadcrumbs />
@@ -35,7 +35,7 @@ const Blog = () => {
                             <BlogCard isDateLink={false} data={data} />
                     }
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "24px", marginBottom: "24px" }}>
-                        <Pagination count={count + 1} page={page} onChange={handleChange} />
+                        <Pagination siblingCount={0} count={count} page={page} onChange={handleChange} />
                     </div>
                 </div>
             </section>

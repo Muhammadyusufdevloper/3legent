@@ -1,0 +1,48 @@
+.manage-category {
+  padding-top: 20px;
+  margin-bottom: 80px;
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding-right: 16px;
+    max-width: 1200px;
+  }
+  &__title {
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 30.8px;
+    color: #454545;
+    margin-bottom: 33px;
+  }
+
+  &__card-title {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    color: #141718;
+  }
+  &__card {
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    padding: 10px 8px;
+    border: 1px solid #141718;
+    border-radius: 6px;
+    justify-content: space-between;
+  }
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    button {
+      padding: 4px 12px;
+      border-radius: 10px;
+      font-size: 18px;
+      background-color: #141718;
+      color: #dde2ff;
+    }
+  }
+}

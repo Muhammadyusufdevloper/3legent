@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import "./productLoop.scss";
 import { FaRegStar, FaStar } from "react-icons/fa";
@@ -9,11 +9,16 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { useDispatch, useSelector } from "react-redux";
 import { toggleHeart } from "../../../../context/slices/wishlistSlice";
 import { addToCart, decrementCart, removeFromCart } from "../../../../context/slices/cartSlice";
+import FullLoading from "../../../../components/loading/FullLoading";
 
-const ProductLoop = ({ data }) => {
+const ProductLoop = ({ data, isFetching, isLoading }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const dispatch = useDispatch();
+    const wishlist = useSelector(state => state.wishlist.value);
+    const cartData = useSelector(state => state.cart.value);
+    const isCart = cartData.find(el => el.id === data?.id);
 
-    const getRating = (rating) => {
+    const getRating = useMemo(() => (rating) => {
         let res = [];
         for (let i = 0; i < Math.trunc(rating); i++) {
             res.push(<FaStar key={`star-${i}`} />);
@@ -25,53 +30,95 @@ const ProductLoop = ({ data }) => {
             res.push(<FaRegStar key={`star-empty-${i}`} />);
         }
         return res;
-    };
-    let dispatch = useDispatch()
-    let wishlist = useSelector(state => state.wishlist.value)
-    let cartData = useSelector(state => state.cart.value)
-    let isCart = (cartData.find(el => el.id === data?.id));
+    }, []);
+
+    const handleAddToCart = useMemo(() => () => dispatch(addToCart(data)), [dispatch, data]);
+    const handleDecrementCart = useMemo(() => () => dispatch(decrementCart(data)), [dispatch, data]);
+    const handleRemoveFromCart = useMemo(() => () => dispatch(removeFromCart(data?.id)), [dispatch, data]);
+    const handleToggleHeart = useMemo(() => () => dispatch(toggleHeart(data)), [dispatch, data]);
+
     return (
         <section className="product-loop">
             <div className="container">
                 <div className="product-loop__wrapper">
                     <div className="product-loop__images-box">
                         <div className="product-loop__base-img">
-                            <Zoom>
-                                <img
-                                    className="product-loop__img"
-                                    src={data?.images[selectedImageIndex]}
-                                    alt={data?.title}
-                                    style={{ width: '100%', height: '100%' }}
-                                />
-                            </Zoom>
+                            {
+                                isFetching || isLoading
+                                    ? <FullLoading width={"549px"} height={"560px"} />
+                                    :
+                                    <Zoom>
+                                        <img
+                                            className="product-loop__img"
+                                            src={data?.images[selectedImageIndex]}
+                                            alt={data?.title}
+                                            style={{ width: '100%', height: '100%' }}
+                                        />
+                                    </Zoom>
+                            }
                             <div className="product-loop__images-box__discount">
                                 <p className="product-loop__images-box__new-text">New</p>
                                 <p className="product-loop__images-box__discount-text">-50%</p>
                             </div>
                         </div>
                         <div className="product-loop__mini-images-cards">
-                            {data?.images?.map((img, index) => (
-                                <div
-                                    key={index}
-                                    className={`product-loop__mini-images-card ${index === selectedImageIndex ? 'product-loop__mini-images-card-selected' : ''}`}
-                                    onClick={() => setSelectedImageIndex(index)}
-                                >
-                                    <img src={img} alt={`Product ${index}`} />
-                                </div>
-                            ))}
+                            {
+                                isFetching || isLoading
+                                    ? <>
+                                        <FullLoading width={"167px"} height={"167px"} />
+                                        <FullLoading width={"167px"} height={"167px"} />
+                                        <FullLoading width={"167px"} height={"167px"} />
+                                    </>
+                                    :
+                                    data?.images?.map((img, index) => (
+                                        <div
+                                            key={index}
+                                            className={`product-loop__mini-images-card ${index === selectedImageIndex ? 'product-loop__mini-images-card-selected' : ''}`}
+                                            onClick={() => setSelectedImageIndex(index)}
+                                        >
+                                            <img src={img} alt={`Product ${index}`} />
+                                        </div>
+                                    ))
+
+                            }
                         </div>
                     </div>
                     <div className="product-loop__content-box">
                         <div className="product-loop__info-card">
                             <div className="product-loop__info-card-rating-part">
-                                {getRating(data?.rating)}
+                                {
+                                    isFetching || isLoading
+                                        ? <FullLoading width={"50%"} height={"20px"} />
+                                        :
+                                        getRating(data?.rating)
+                                }
                                 <p className="product-loop__info-card-rating-text">11 Reviews</p>
                             </div>
-                            <h1 className="product-loop__info-card-title">{data?.title}</h1>
-                            <p className="product-loop__info-card-text">{data?.description}</p>
+                            <h1 className="product-loop__info-card-title">{
+                                isFetching || isLoading
+                                    ? <FullLoading width={"100%"} height={"44px"} />
+                                    :
+                                    data?.title
+                            }</h1>
+                            <p className="product-loop__info-card-text">{
+                                isFetching || isLoading
+                                    ? <FullLoading width={"100%"} height={"100px"} />
+                                    :
+                                    data?.description
+                            }</p>
                             <div className="product-loop__info-card-price-part">
-                                <p className="product-loop__info-card-price-text">$ {data?.price}</p>
-                                <p className="product-loop__info-card-old-price-text">$ {data?.oldPrice}</p>
+                                <p className="product-loop__info-card-price-text">$ {
+                                    isFetching || isLoading
+                                        ? <FullLoading width={"60px"} height={"16px"} />
+                                        :
+                                        data?.price
+                                }</p>
+                                <p className="product-loop__info-card-old-price-text">$ {
+                                    isFetching || isLoading
+                                        ? <FullLoading width={"60px"} height={"16px"} />
+                                        :
+                                        data?.oldPrice
+                                }</p>
                             </div>
                         </div>
                         <div className="product-loop__timer-card">
@@ -101,32 +148,38 @@ const ProductLoop = ({ data }) => {
                                 <p className="product-loop__swatches-card-size-text">17 1/2x20 5/8 </p>
                             </div>
                             <div className="product-loop__swatches-card-cards">
-                                {data?.images?.map((img, index) => (
-                                    <div
-                                        key={index}
-                                        className={`product-loop__swatches-card-card ${index === selectedImageIndex ? 'product-loop__mini-images-card-selected' : ''}`}
-                                        onClick={() => setSelectedImageIndex(index)}
-                                    >
-                                        <img src={img} alt={`Product ${index}`} />
-                                    </div>
-                                ))}
+
+                                {
+                                    isFetching || isLoading
+
+                                        ? <>
+                                            <FullLoading width={"70px"} height={"70px"} />
+                                            <FullLoading width={"70px"} height={"70px"} />
+                                            <FullLoading width={"70px"} height={"70px"} />
+                                        </>
+                                        :
+                                        data?.images?.map((img, index) => (
+                                            <div
+                                                key={index}
+                                                className={`product-loop__swatches-card-card ${index === selectedImageIndex ? 'product-loop__mini-images-card-selected' : ''}`}
+                                                onClick={() => setSelectedImageIndex(index)}
+                                            >
+                                                <img src={img} alt={`Product ${index}`} />
+                                            </div>
+                                        ))}
                             </div>
                             <div className="product-loop__cart-card">
                                 <div className="product-loop__cart-card__buttons">
-                                    {
-                                        !isCart ?
-                                            <button onClick={() => dispatch(addToCart(data))} className="product-loop__cart-card__add-btn">Add To Cart</button>
-                                            :
-                                            <div className="product-loop__cart-card__part">
-                                                <button onClick={() => dispatch(
-                                                    isCart?.quantity <= 1 ? removeFromCart(data?.id) :
-                                                        decrementCart(data)
-                                                )}>-</button>
-                                                <p>{isCart?.quantity}</p>
-                                                <button onClick={() => dispatch(addToCart(data))}>+</button>
-                                            </div>
-                                    }
-                                    <button onClick={() => dispatch(toggleHeart(data))} className={`product-loop__cart-card__wishlist-btn ${wishlist?.some((el) => el.id === data?.id) ? 'product-loop__cart-card__wishlist-btn-active' : ''}`}>
+                                    {!isCart ? (
+                                        <button onClick={handleAddToCart} className="product-loop__cart-card__add-btn">Add To Cart</button>
+                                    ) : (
+                                        <div className="product-loop__cart-card__part">
+                                            <button onClick={isCart?.quantity <= 1 ? handleRemoveFromCart : handleDecrementCart}>-</button>
+                                            <p>{isCart?.quantity}</p>
+                                            <button onClick={handleAddToCart}>+</button>
+                                        </div>
+                                    )}
+                                    <button onClick={handleToggleHeart} className={`product-loop__cart-card__wishlist-btn ${wishlist?.some((el) => el.id === data?.id) ? 'product-loop__cart-card__wishlist-btn-active' : ''}`}>
                                         <GoHeart />
                                         <p>Wishlist</p>
                                     </button>
@@ -159,7 +212,10 @@ ProductLoop.propTypes = {
         oldPrice: PropTypes.number,
         rating: PropTypes.number,
         stock: PropTypes.number,
-        category: PropTypes.string
+        category: PropTypes.string,
+        id: PropTypes.string,
+        isFetching: PropTypes.bool,
+        isLoading: PropTypes.bool
     }).isRequired
 };
 

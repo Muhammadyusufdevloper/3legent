@@ -7,6 +7,7 @@ import { Pagination } from "@mui/material"
 import { useGetCategoryQuery } from "../../context/api/categoryApi"
 import Category from "../../components/category/Category"
 import ProductItemLoading from "../../components/loading/product-section-item/ProductItemLoading"
+import Breadcrumbs from "../../components/breadcrumbs/Breadcrumbs"
 
 const Shop = () => {
     const [categoryValue, setCategoryValue] = useState("all")
@@ -21,10 +22,11 @@ const Shop = () => {
     };
     let count = Math.ceil(lengthData?.length / 8)
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+        window.scrollTo(0, 500)
+    }, [page])
     return (
         <>
+            <Breadcrumbs />
             <HeroBase title={"Shop Page"} desc={"Let’s design the place you always imagined."} path={"Shop"} isImages={false} />
             <section>
                 <div className="container">
@@ -34,7 +36,7 @@ const Shop = () => {
                             <ProductItems data={product} isGrid={false} />
                     }
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "24px", marginBottom: "24px" }}>
-                        <Pagination count={count} page={page} onChange={handleChange} />
+                        <Pagination siblingCount={0} count={count} page={page} onChange={handleChange} />
                     </div>
                 </div>
             </section>
